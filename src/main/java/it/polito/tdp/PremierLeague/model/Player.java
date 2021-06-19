@@ -1,13 +1,15 @@
 package it.polito.tdp.PremierLeague.model;
 
 public class Player {
-	Integer playerID;
-	String name;
+	private Integer playerID;
+	private String name;
+	private Double mediaGoal;
 	
-	public Player(Integer playerID, String name) {
+	public Player(Integer playerID, String name, Double mediaGoal) {
 		super();
 		this.playerID = playerID;
 		this.name = name;
+		this.mediaGoal = mediaGoal;
 	}
 	
 	public Integer getPlayerID() {
@@ -52,6 +54,16 @@ public class Player {
 	public String toString() {
 		return playerID + " - " + name;
 	}
+
+	public Double getMediaGoal() {
+		return mediaGoal;
+	}
+
+	public void setMediaGoal(Double mediaGoal) {
+		this.mediaGoal = mediaGoal;
+	}
+	
+	
 	
 	
 	
