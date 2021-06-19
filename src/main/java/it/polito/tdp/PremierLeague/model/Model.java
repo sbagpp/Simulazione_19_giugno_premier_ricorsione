@@ -1,6 +1,7 @@
 package it.polito.tdp.PremierLeague.model;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -56,6 +57,59 @@ public class Model {
 			return s;
 		}
 		return null;
+	}
+
+
+	public List<Player> getBest() {
+		double bestTime = this.cercaBestTime();
+		//System.out.println(bestTime);
+		List<Player> best = new ArrayList<>();
+		
+		for(Player p : this.grafo.vertexSet()) {
+			if(this.calcolaDelta(p) == (bestTime)) {
+				best.add(p);
+				//System.out.println(p);
+			}
+		}
+		
+		return best;
+	}
+
+
+	private double cercaBestTime() {
+		
+		double delta_best = -1.0;
+		
+		for(Player p : this.grafo.vertexSet()) {
+			double delta = this.calcolaDelta(p);
+			if(delta_best == -1 || delta > delta_best) {
+				delta_best = delta;
+				System.out.println(p);
+				System.out.println(delta);
+			}
+		}
+		
+		return delta_best;
+	}
+
+
+	private double calcolaDelta(Player p) {
+		int min =(int) this.grafo.outDegreeOf(p);
+		
+		return min ;
+	}
+
+
+	public List<Adiacente> getBattutti(Player p) {
+		List<Adiacente> result = new ArrayList<>() ;
+		for(DefaultWeightedEdge ed : this.grafo.outgoingEdgesOf(p)) {
+			Double peso  = this.grafo.getEdgeWeight(ed);
+			Player bat = Graphs.getOppositeVertex(this.grafo, ed, p) ;
+			result.add(new Adiacente(p, bat, peso));
+		}
+		Collections.sort(result, new OrderBattuti());
+		
+		return result;
 	}
 
 }
